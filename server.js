@@ -20,6 +20,14 @@ function createNews() {
     return arrayNews;
 }
 
+function randomCode() {
+    const code = Math.round(Math.random() * 10) % 2 !== 0 ? 500 : 200;
+
+    return code;
+}
+
+// console.log(randomCode());
+
 app.use(koaBody({
     text: true,
     urlencoded: true,
@@ -35,15 +43,16 @@ app.use(cors({
 }));
 
 router.get('/news', async (ctx) => {
-    ctx.response.body = createNews();
+    // ctx.status = randomCode();
     ctx.status = 200;
+    ctx.response.body = createNews();
 });
 
-app.use(slow({
-    delay: 3000
-}));
+// app.use(slow({
+//     delay: 3000
+// }));
 
 app.use(router.routes()).use(router.allowedMethods());
 
-const port = process.env.PORT || 3333;
+const port = process.env.PORT || 3000;
 app.listen(port, () => console.log('Server started'));
