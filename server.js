@@ -26,8 +26,6 @@ function randomCode() {
     return code;
 }
 
-// console.log(randomCode());
-
 app.use(koaBody({
     text: true,
     urlencoded: true,
@@ -43,9 +41,14 @@ app.use(cors({
 }));
 
 router.get('/news', async (ctx) => {
-    // ctx.status = randomCode();
-    ctx.status = 200;
-    ctx.response.body = createNews();
+    ctx.status = randomCode();
+    console.log(ctx.status);
+    if (ctx.status === 500) {
+        return ctx.status = 500;
+    } else {
+        ctx.status = 200;
+        ctx.response.body = createNews();
+    }
 });
 
 // app.use(slow({
@@ -54,5 +57,5 @@ router.get('/news', async (ctx) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3333;
 app.listen(port, () => console.log('Server started'));
