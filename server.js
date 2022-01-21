@@ -3,7 +3,6 @@ const koaBody = require('koa-body');
 const cors = require('koa2-cors');
 const Router = require('koa-router');
 const faker = require('faker');
-const slow = require('koa-slow');
 const router = new Router();
 const app = new Koa();
 
@@ -22,7 +21,6 @@ function createNews() {
 
 function randomCode() {
     const code = Math.round(Math.random() * 10) % 2 !== 0 ? 500 : 200;
-
     return code;
 }
 
@@ -50,10 +48,6 @@ router.get('/news', async (ctx) => {
         ctx.response.body = createNews();
     }
 });
-
-// app.use(slow({
-//     delay: 3000
-// }));
 
 app.use(router.routes()).use(router.allowedMethods());
 
